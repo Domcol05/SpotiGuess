@@ -1,0 +1,1942 @@
+/* ==========================================================================
+   SpotiGuess - Design System & Modern iOS Mobile Stylesheet
+   ========================================================================== */
+
+:root {
+  /* Dynamic Theme Colors (Default: Player A / Emerald Green) */
+  --primary: #1db954;
+  --primary-hover: #1aa34a;
+  --primary-dark: #15803d;
+  --primary-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  --primary-glow: rgba(34, 197, 94, 0.35);
+  --primary-light-bg: #ecfdf5;
+  --theme-accent-text: #15803d;
+
+  /* Secondary / Neutral Palette */
+  --bg-app: #f7f9fa;
+  --surface: #ffffff;
+  --surface-alt: #f1f5f9;
+  --surface-hover: #e2e8f0;
+  --border-light: #e5e7eb;
+  --border-subtle: #edf2f7;
+
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-white: #ffffff;
+
+  /* Status Colors */
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-error-bg: #fef2f2;
+  --color-warning: #f59e0b;
+
+  /* Player Specific Tints */
+  --player-a-color: #1db954;
+  --player-a-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  --player-b-color: #8b5cf6;
+  --player-b-gradient: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+  --player-b-glow: rgba(139, 92, 246, 0.35);
+  --player-b-light-bg: #f5f3ff;
+  --player-b-accent-text: #6d28d9;
+
+  /* Layout & Radii */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  /* Elevation Shadows */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 14px 32px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 8px 24px var(--primary-glow);
+
+  /* Fonts */
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* THEME VARIANT: Turno Giocatore B (1 vs 1) */
+.theme-player-b {
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+  --primary-dark: #6d28d9;
+  --primary-gradient: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+  --primary-glow: rgba(139, 92, 246, 0.35);
+  --primary-light-bg: #f5f3ff;
+  --theme-accent-text: #6d28d9;
+  --shadow-glow: 0 8px 24px var(--player-b-glow);
+}
+
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  background-color: #e9edf0;
+  font-family: var(--font-system);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background-color: #e2e8f0;
+  overflow-x: hidden;
+}
+
+/* Container Principale Simil-iPhone (Max-Width 420px) */
+#app {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-app);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Helper Class per Nascondere */
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Gestione Schermate
+   ========================================================================== */
+.screen {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.screen.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   SCHERMATA 1: SELEZIONE & HOME
+   ========================================================================== */
+.app-header {
+  padding: 24px 20px 16px;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.logo-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(29, 185, 84, 0.35);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+
+.logo-icon-wrap:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(29, 185, 84, 0.5);
+}
+
+.app-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.logo-text {
+  text-align: left;
+}
+
+.logo-text h1 {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.badge-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.app-tagline {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* Segmented Control iOS */
+.mode-selector-wrapper {
+  padding: 0 20px 16px;
+}
+
+.segmented-control {
+  background-color: var(--surface-alt);
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  position: relative;
+  gap: 4px;
+  border: 1px solid var(--border-light);
+}
+
+.segment-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.22s ease;
+  font-family: inherit;
+}
+
+.segment-btn.active {
+  background: var(--surface);
+  color: var(--text-primary);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.mode-caption {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+/* Selection Body */
+.selection-body {
+  padding: 0 20px 100px;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.section-counter {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background-color: var(--surface-alt);
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+}
+
+/* Category Cards List */
+.categories-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.category-card-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  position: relative;
+}
+
+.category-card-item:active {
+  transform: scale(0.985);
+}
+
+.category-card-item.selected {
+  border-color: var(--primary);
+  background-color: var(--primary-light-bg);
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.category-icon-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background-color: var(--surface-alt);
+  margin-right: 14px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.category-card-item.selected .category-icon-bubble {
+  transform: scale(1.05);
+}
+
+.category-info-col {
+  flex: 1;
+}
+
+.category-name-text {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.category-sub-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.category-check-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.category-card-item.selected .category-check-circle {
+  border-color: var(--primary);
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.category-check-circle svg {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.category-card-item.selected .category-check-circle svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Spotify Custom Card */
+.spotify-card {
+  background-color: var(--surface);
+  border: 1.5px dashed #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.spotify-card.active-selected {
+  border-color: #1ed760;
+  border-style: solid;
+  background-color: #f0fdf4;
+}
+
+.spotify-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.spotify-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spotify-card-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.spotify-card-sub {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}
+
+.spotify-input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.spotify-input-group input {
+  flex: 1;
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 0.84rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.spotify-input-group input:focus {
+  border-color: #1ed760;
+  background-color: #ffffff;
+}
+
+.btn-secondary-sm {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0 16px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-secondary-sm:active {
+  opacity: 0.85;
+}
+
+.btn-text-action {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0 2px;
+  display: inline-block;
+  text-align: left;
+  transition: color 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-text-action:hover, .btn-text-action:active {
+  color: #16a34a;
+}
+
+.spotify-status {
+  font-size: 0.78rem;
+  margin-top: 8px;
+  font-weight: 600;
+  display: none;
+}
+
+.spotify-status.success {
+  display: block;
+  color: #16a34a;
+}
+
+.spotify-status.error {
+  display: block;
+  color: #dc2626;
+}
+
+.spotify-status.loading {
+  display: block;
+  color: #2563eb;
+  animation: pulse-status 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-status {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.btn-delete-custom {
+  position: absolute;
+  top: 14px;
+  right: 50px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 5;
+}
+
+.btn-delete-custom:hover, .btn-delete-custom:active {
+  background: #ef4444;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* Sticky Bottom Action Bar */
+.bottom-action-bar {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(247, 249, 250, 0) 0%, rgba(247, 249, 250, 0.95) 25%, rgba(247, 249, 250, 1) 100%);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.btn-primary-action {
+  width: 100%;
+  background: var(--primary-gradient);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 16px 24px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-primary-action:active {
+  transform: scale(0.975);
+}
+
+.btn-secondary-action {
+  width: 100%;
+  background-color: var(--surface);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  padding: 14px 24px;
+  font-size: 0.96rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.btn-secondary-action:active {
+  background-color: var(--surface-alt);
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   SCHERMATA 2: GIOCO (Mockup 1 & 2)
+   ========================================================================== */
+.game-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px 8px;
+  background-color: var(--bg-app);
+  position: relative;
+  z-index: 50;
+}
+
+.icon-btn-round {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background: var(--surface);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  position: relative;
+  z-index: 60;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn-round::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  pointer-events: auto;
+}
+
+.icon-btn-round svg,
+.icon-btn-round * {
+  pointer-events: none;
+}
+
+.icon-btn-round:active {
+  transform: scale(0.9);
+  background-color: var(--surface-alt);
+}
+
+.game-meta-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.game-category-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.game-round-indicator {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.game-score-badge {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  box-shadow: var(--shadow-sm);
+}
+
+.score-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.score-val {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+/* Turn Banner (1 vs 1) */
+.turn-banner {
+  margin: 4px 18px 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background-color: var(--primary-light-bg);
+  border: 1px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: fadeInDown 0.3s ease;
+}
+
+.turn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  animation: pulseDot 1.4s infinite;
+}
+
+.turn-text {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--theme-accent-text);
+  letter-spacing: 0.01em;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Game Main Content Scrollable */
+.game-main-content {
+  flex: 1;
+  padding: 4px 18px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+
+/* Mystery Card (Mockup 1) */
+.mystery-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  margin-bottom: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-badge-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.genre-pill-tag {
+  background: var(--primary-light-bg);
+  color: var(--theme-accent-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.masked-year-pill {
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.card-attempt-status {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.dashed-music-box {
+  width: 90px;
+  height: 90px;
+  border: 2px dashed #cbd5e1;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #fafbfc;
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.mystery-card.playing .dashed-music-box {
+  border-color: var(--primary);
+  background-color: var(--primary-light-bg);
+  color: var(--primary);
+}
+
+.pulsing-note-icon {
+  z-index: 2;
+  transition: transform 0.25s ease;
+}
+
+.mystery-card.playing .pulsing-note-icon {
+  animation: bounceNote 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes bounceNote {
+  from { transform: scale(1) translateY(0); }
+  to { transform: scale(1.12) translateY(-3px); }
+}
+
+/* Sound Ripples Animation */
+.sound-ripples {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.mystery-card.playing .sound-ripples {
+  opacity: 1;
+}
+
+.ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--primary);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
+}
+
+.mystery-card.playing .r1 {
+  animation: rippleEffect 1.6s infinite cubic-bezier(0, 0.2, 0.8, 1);
+}
+.mystery-card.playing .r2 {
+  animation: rippleEffect 1.6s infinite 0.5s cubic-bezier(0, 0.2, 0.8, 1);
+}
+.mystery-card.playing .r3 {
+  animation: rippleEffect 1.6s infinite 1.0s cubic-bezier(0, 0.2, 0.8, 1);
+}
+
+@keyframes rippleEffect {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
+}
+
+.mystery-titles {
+  margin-bottom: 10px;
+}
+
+.mystery-song-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.mystery-artist-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.apple-preview-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface-alt);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+/* 6 Attempt Slots (Numbered 1 to 6) */
+.attempts-bar-container {
+  margin-bottom: 16px;
+}
+
+.attempts-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.attempt-slot {
+  height: 38px;
+  background-color: var(--surface);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.attempt-slot.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+.attempt-slot.wrong {
+  background-color: var(--color-error);
+  border-color: var(--color-error);
+  color: #ffffff;
+}
+
+.attempt-slot.correct {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+  color: #ffffff;
+}
+
+.attempt-slot.skipped {
+  background-color: #cbd5e1;
+  border-color: #94a3b8;
+  color: #ffffff;
+}
+
+/* Circular Play Button Section */
+.play-controller-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 6px 0 16px;
+}
+
+.play-button-outer {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-progress-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 96px;
+  height: 96px;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: var(--surface-alt);
+  stroke-width: 5;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-dasharray: 301.6;
+  stroke-dashoffset: 301.6;
+  transition: stroke-dashoffset 0.1s linear, stroke 0.3s ease;
+}
+
+.btn-play-circle {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px var(--primary-glow);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  z-index: 2;
+}
+
+.btn-play-circle:active {
+  transform: scale(0.92);
+}
+
+.play-svg-icon {
+  margin-left: 3px;
+}
+
+.play-info-box {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.play-time-tag {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  padding: 2px 14px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+}
+
+.play-hint-text {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Guess Input & Autocomplete Section */
+.guess-input-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0 14px;
+  height: 48px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-with-icon:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.search-input-icon {
+  color: var(--text-muted);
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.input-with-icon input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.input-with-icon input::placeholder {
+  color: var(--text-muted);
+}
+
+.clear-input-btn {
+  background: var(--surface-alt);
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Autocomplete Dropdown List */
+.autocomplete-dropdown {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 100;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dropdown-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:active, .dropdown-item:hover {
+  background-color: var(--primary-light-bg);
+}
+
+.dropdown-item-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  overflow: hidden;
+}
+
+.dropdown-item-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dropdown-item-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.item-song-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-song-artist {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-empty {
+  padding: 14px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Bottom Action Buttons: Salta & Invia */
+.guess-buttons-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-skip {
+  flex: 1;
+  background-color: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  height: 48px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.btn-skip:active {
+  background-color: var(--surface-hover);
+  transform: scale(0.98);
+}
+
+.btn-submit {
+  flex: 1.8;
+  background: var(--primary-gradient);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-pill);
+  height: 48px;
+  font-size: 0.94rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: var(--shadow-glow);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-submit:not(:disabled):active {
+  transform: scale(0.975);
+}
+
+/* ==========================================================================
+   SCHERMATA 3: RIVELAZIONE BRANO (Mockup 4)
+   ========================================================================== */
+.reveal-content-box {
+  padding: 20px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.reveal-header-status {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.status-icon-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--color-success);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.reveal-header-status.failed .status-icon-circle {
+  background: var(--color-error);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.reveal-title-text {
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.reveal-sub-text {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Reveal Card */
+.reveal-card {
+  width: 100%;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.artwork-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  margin-bottom: 16px;
+}
+
+.reveal-artwork-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.artwork-overlay-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
+  pointer-events: none;
+}
+
+.btn-replay-audio {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border: none;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.btn-replay-audio:active {
+  transform: scale(0.9);
+}
+
+.reveal-song-info {
+  margin-bottom: 18px;
+}
+
+.reveal-song-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.reveal-song-artist {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.reveal-song-year {
+  display: inline-block;
+  background-color: var(--surface-alt);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  margin-top: 6px;
+}
+
+/* Stats Grid in Reveal */
+.reveal-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+
+.stat-bubble {
+  background-color: var(--surface-alt);
+  border-radius: var(--radius-sm);
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.stat-value.highlight {
+  color: var(--primary);
+}
+
+/* 1 vs 1 Punteggi in Reveal */
+.reveal-duo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-light);
+  width: 100%;
+}
+
+.duo-score-pill {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.duo-score-pill.player-a {
+  background-color: #ecfdf5;
+  border: 1px solid var(--player-a-color);
+}
+
+.duo-score-pill.player-b {
+  background-color: #f5f3ff;
+  border: 1px solid var(--player-b-color);
+}
+
+.duo-pill-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.duo-pill-pts {
+  font-size: 0.98rem;
+  font-weight: 800;
+}
+
+.duo-score-pill.player-a .duo-pill-pts { color: var(--player-a-color); }
+.duo-score-pill.player-b .duo-pill-pts { color: var(--player-b-color); }
+
+.duo-vs {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   SCHERMATA 4: RISULTATI FINALI
+   ========================================================================== */
+.results-container {
+  padding: 24px 20px 40px;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.trophy-badge {
+  font-size: 3.2rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.3));
+  animation: bounceNote 1.2s infinite alternate;
+}
+
+.results-headline {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.results-subtitle {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Solo Hero Card */
+.score-card-hero {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 14px;
+}
+
+.score-hero-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.score-hero-value {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.score-hero-max {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.summary-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 12px 8px;
+  text-align: center;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.metric-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+}
+
+.metric-text {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* 1 vs 1 Duo Final View */
+.winner-announcement-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 14px;
+}
+
+.winner-crown {
+  font-size: 2.4rem;
+  margin-bottom: 4px;
+}
+
+.winner-name-text {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.winner-detail-text {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.duo-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.duo-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+  border: 1.5px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.duo-card.player-a-card.is-winner {
+  border-color: var(--player-a-color);
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
+}
+
+.duo-card.player-b-card.is-winner {
+  border-color: var(--player-b-color);
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.25);
+}
+
+.player-badge-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 8px;
+}
+
+.player-badge-pill.a { background: #ecfdf5; color: var(--player-a-color); }
+.player-badge-pill.b { background: #f5f3ff; color: var(--player-b-color); }
+
+.duo-final-pts {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.duo-final-stat {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Songs Recap List */
+.songs-recap-box {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 22px;
+}
+
+.recap-box-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.recap-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recap-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background-color: var(--surface-alt);
+  border-radius: var(--radius-sm);
+}
+
+.recap-track-desc {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.recap-status-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.recap-status-icon.success {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.recap-status-icon.fail {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.recap-track-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recap-track-pts {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  margin-left: 8px;
+}
+
+.results-actions-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   MODAL: PASS & PLAY
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.modal-sheet-card {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.phone-pass-icon-wrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--primary-light-bg);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  animation: floatPhone 1.8s infinite ease-in-out;
+}
+
+@keyframes floatPhone {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.modal-tag-turn {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.modal-turn-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.highlight-player {
+  color: var(--primary);
+  transition: color 0.3s ease;
+}
+
+.modal-turn-caption {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  margin-bottom: 22px;
+}
+
+/* Modal Playlist Builder */
+.playlist-builder-card {
+  max-width: 380px;
+  text-align: left;
+  padding: 22px 20px;
+}
+
+.modal-custom-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.spotify-badge-round {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.modal-custom-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.modal-custom-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.custom-field-group {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.custom-field-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.custom-text-input,
+.custom-textarea-input {
+  width: 100%;
+  background-color: var(--surface-alt);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 0.86rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.custom-textarea-input {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.45;
+}
+
+.custom-text-input:focus,
+.custom-textarea-input:focus {
+  border-color: #1ed760;
+  background-color: #ffffff;
+}
+
+.custom-field-hint {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.custom-modal-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   Responsive Minor Fixes & iOS Standalone PWA
+   ========================================================================== */
+@media (max-width: 360px) {
+  .btn-play-circle {
+    width: 68px;
+    height: 68px;
+  }
+  .play-button-outer, .play-progress-svg {
+    width: 86px;
+    height: 86px;
+  }
+  .dashed-music-box {
+    width: 76px;
+    height: 76px;
+  }
+  .mystery-song-name {
+    font-size: 1.05rem;
+  }
+}
